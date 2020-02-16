@@ -1,0 +1,19 @@
+class statssnapshot:
+    long countLastMinute
+    long countLastHour
+    long countTotal
+    double rpcRateLastMinute
+    double rpcRateLastHour
+    double rpcRateTotal 
+    double avgLatencyLastMinute
+    double avgLatencyLastHour
+    double avgLatencyTotal
+    double inputRateLastMinute
+    double inputRateLastHour
+    double inputRateTotal
+    double outputRateLastMinute
+    double outputRateLastHour
+    double outputRateTotal
+    long errorsLastMinute
+    long errorsLastHour
+    long errorsTotal
