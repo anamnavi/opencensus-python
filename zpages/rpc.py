@@ -1,140 +1,31 @@
-'''
-This file registers/creates the RPC views and creates the html page
-'''
-class RPCHandler:
+from flask import Flask, escape, request, render_template
 
-    RPCZ_URL = "/rpcz"
-    SENT = "Sent"
-    RECEIVED = "Received"
-    SECONDS_PER_MINUTE = 60.0
-    SECONDS_PER_HOUR = 3600.0
-    NANOS_PER_SECOND = 1e9
-    BYTES_PER_KB = 1024
-    #private final ViewManager viewManager TODO add this variable
-    RPC_STATS_TYPES = ["Count",
-          "Avg latency (ms)",
-          "Rate (rpc/s)",
-          "Input (kb/s)",
-          "Output (kb/s)",
-          "Errors"]
-    CLIENT_RPC_CUMULATIVE_VIEWS = [RPC_CLIENT_ERROR_COUNT_VIEW,
-          RPC_CLIENT_ROUNDTRIP_LATENCY_VIEW,
-          RPC_CLIENT_REQUEST_BYTES_VIEW,
-          RPC_CLIENT_RESPONSE_BYTES_VIEW,
-          RPC_CLIENT_STARTED_COUNT_CUMULATIVE_VIEW,
-          // The last 5 views are not used yet.
-          RPC_CLIENT_REQUEST_COUNT_VIEW,
-          RPC_CLIENT_RESPONSE_COUNT_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_REQUEST_BYTES_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_RESPONSE_BYTES_VIEW,
-          RPC_CLIENT_FINISHED_COUNT_CUMULATIVE_VIEW]
+app = Flask(__name__)
 
-    SERVER_RPC_CUMULATIVE_VIEWS = [RPC_SERVER_ERROR_COUNT_VIEW,
-          RPC_SERVER_SERVER_LATENCY_VIEW,
-          RPC_SERVER_REQUEST_BYTES_VIEW,
-          RPC_SERVER_RESPONSE_BYTES_VIEW,
-          RPC_SERVER_STARTED_COUNT_CUMULATIVE_VIEW,
-          // The last 5 views are not used yet.
-          RPC_SERVER_REQUEST_COUNT_VIEW,
-          RPC_SERVER_RESPONSE_COUNT_VIEW,
-          RPC_SERVER_UNCOMPRESSED_REQUEST_BYTES_VIEW,
-          RPC_SERVER_UNCOMPRESSED_RESPONSE_BYTES_VIEW,
-          RPC_SERVER_FINISHED_COUNT_CUMULATIVE_VIEW]
+@app.route('/')
+def hello():
+    #name = request.args.get("name", "World")
+    direction = "Sent"
+    template_values = {'Direction': direction}
+    # path = os.path.join(os.path.dirname(__file__), 'index.html')
+    # self.response.out.write(template.render(path, template_values))
 
-    CLIENT_RPC_MINUTE_VIEWS = [RPC_CLIENT_ERROR_COUNT_MINUTE_VIEW,
-          RPC_CLIENT_ROUNDTRIP_LATENCY_MINUTE_VIEW,
-          RPC_CLIENT_REQUEST_BYTES_MINUTE_VIEW,
-          RPC_CLIENT_RESPONSE_BYTES_MINUTE_VIEW,
-          RPC_CLIENT_STARTED_COUNT_MINUTE_VIEW,
-          // The last 5 views are not used yet.
-          RPC_CLIENT_REQUEST_COUNT_MINUTE_VIEW,
-          RPC_CLIENT_RESPONSE_COUNT_MINUTE_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_REQUEST_BYTES_MINUTE_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_RESPONSE_BYTES_MINUTE_VIEW,
-          RPC_CLIENT_FINISHED_COUNT_MINUTE_VIEW]
+    return render_template("index.html", Direction = direction)
 
-    SERVER_RPC_MINUTE_VIEWS = [RPC_SERVER_ERROR_COUNT_MINUTE_VIEW,
-          RPC_SERVER_SERVER_LATENCY_MINUTE_VIEW,
-          RPC_SERVER_REQUEST_BYTES_MINUTE_VIEW,
-          RPC_SERVER_RESPONSE_BYTES_MINUTE_VIEW,
-          RPC_SERVER_STARTED_COUNT_MINUTE_VIEW,
-          // The last 5 views are not used yet.
-          RPC_SERVER_REQUEST_COUNT_MINUTE_VIEW,
-          RPC_SERVER_RESPONSE_COUNT_MINUTE_VIEW,
-          RPC_SERVER_UNCOMPRESSED_REQUEST_BYTES_MINUTE_VIEW,
-          RPC_SERVER_UNCOMPRESSED_RESPONSE_BYTES_MINUTE_VIEW,
-          RPC_SERVER_FINISHED_COUNT_MINUTE_VIEW]
+if __name__ == '__main__':
+    app.run(debug=True)
 
-    CLIENT_RPC_HOUR_VIEWS = [RPC_CLIENT_ERROR_COUNT_HOUR_VIEW,
-          RPC_CLIENT_ROUNDTRIP_LATENCY_HOUR_VIEW,
-          RPC_CLIENT_REQUEST_BYTES_HOUR_VIEW,
-          RPC_CLIENT_RESPONSE_BYTES_HOUR_VIEW,
-          RPC_CLIENT_STARTED_COUNT_HOUR_VIEW,
-          // The last 5 views are not used yet.
-          RPC_CLIENT_REQUEST_COUNT_HOUR_VIEW,
-          RPC_CLIENT_RESPONSE_COUNT_HOUR_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_REQUEST_BYTES_HOUR_VIEW,
-          RPC_CLIENT_UNCOMPRESSED_RESPONSE_BYTES_HOUR_VIEW,
-          RPC_CLIENT_FINISHED_COUNT_HOUR_VIEW]
 
-    SERVER_RPC_HOUR_VIEWS = [RPC_SERVER_ERROR_COUNT_HOUR_VIEW,
-          RPC_SERVER_SERVER_LATENCY_HOUR_VIEW,
-          RPC_SERVER_SERVER_ELAPSED_TIME_HOUR_VIEW,
-          RPC_SERVER_REQUEST_BYTES_HOUR_VIEW,
-          RPC_SERVER_RESPONSE_BYTES_HOUR_VIEW,
-          RPC_SERVER_STARTED_COUNT_HOUR_VIEW,
-          // The last 5 views are not used yet.
-          RPC_SERVER_REQUEST_COUNT_HOUR_VIEW,
-          RPC_SERVER_RESPONSE_COUNT_HOUR_VIEW,
-          RPC_SERVER_UNCOMPRESSED_REQUEST_BYTES_HOUR_VIEW,
-          RPC_SERVER_UNCOMPRESSED_RESPONSE_BYTES_HOUR_VIEW,
-          RPC_SERVER_FINISHED_COUNT_HOUR_VIEW]
-
-    def getUrlPath():
-        return RPCZ_URL
-    
-    def emitStyle(PrintWriter out):
-        out.write("<style>\n")
-        out.write(Style.style)
-        out.write("</style>\n")
-    
-    def emitHtml(Map<String, String> queryMap, OutputStream outputStream):
-        return "to be done"
-    
-    def emitHtmlBody(PrintWriter out):
-        return "to be done"
-
-    def emitSummaryTable(PrintWriter out, Formatter formatter, boolean isReceived):
-        return "to be done"
-
-    def emitSummaryTableHeader(PrintWriter out, Formatter formatter):
-        return "to be done"
-
-    def emitSummaryTableRows(PrintWriter out, Formatter formatter, StatsSnapshot snapshot, String method):
-        return "to be done"
-    
-    def getStatsSnapshots(boolean isReceived):
-        return "to be done"
-
-    def getStatsSnapshots(Map<String, StatsSnapshot> map, List<View> views):
-        return "to be done"
-    
-    def getStats(StatsSnapshot snapshot, AggregationData data, View view, ViewData.AggregationWindowData windowData):
-        return "to be done"
-
-    def getDurationInSecs(ViewData.AggregationWindowData.CumulativeData cumulativeData):
-        return "to be done"
-    
-    def toDoubleSeconds(Duration duration):
-        return "to be done"
-
-    def RpczZPageHandler create(ViewManager viewManager)
-        return new RpczZPageHandler(viewManager)
-
-    def RpczZPageHandler(ViewManager viewManager):
-        this.viewManager = viewManager
-        
-    def __init__(self, param1, param2):
-        self.param1 = param1
-        self.param2 = param2
-import io.opencensus.stats.ViewManager
+# class CalcController(webapp.RequestHandler):
+#   def get(self):
+#     principalString=self.request.get('principal')
+#     rateString = self.request.get('rate')
+#     principal = int(principalString)
+#     rate = int(rateString)
+#     interest = principal*rate/100
+#     interestString = str(interest)
+#    # set up the template_values with the list of people returned.
+#     template_values= {'interest':interestString, 'principal': principalString}
+#     # render the page using the template engine
+#     path = os.path.join(os.path.dirname(__file__),'index.html')
+#     self.response.out.write(template.render(path,template_values))
