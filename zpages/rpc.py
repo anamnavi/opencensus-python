@@ -1,9 +1,16 @@
 from flask import Flask, escape, request, render_template
 from typing import NamedTuple
+import sys
+from opencensus.stats import view as view_module
+from opencensus.stats import view_manager as view_manager_module
 import datetime
+
 
 app = Flask(__name__)
 
+manager = view_manager_module.ViewManager()
+
+print(sys.path)
 
 class statSnapshot(NamedTuple):
     method: str
@@ -36,14 +43,26 @@ class statGroup(NamedTuple):
 class statPage(NamedTuple):
     statgroups: list # of type statGroup, can't specify explicitly but will only consist of this
 
+def getStatsSnapshots(map, views) :
+    for view in views :
+      view_data = manager.get_view(manager,view.name)
+      if view_data is None:
+        continue
+      for key in view_data.tag_value_aggregation_data_map(view_data).keys():
+        method = "" if key is None else key.asString()
+        snapshot = statSnapshot(map.get(method))
+        if (snapshot is None) :
+          snapshot = statSnapshot()
+          map.put(method, snapshot)
+
+        #TODO getStats(snapshot, entry.getValue(), view, view_data.getWindowData());
+
 
 @app.route('/')
 def showPage():
     directionDummy = "Sent"
     test_row = statSnapshot('apicall1()', False, 1, 2, 3, '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 4, 5, 6)
-    # template_values = {'Direction': directionDummy}
-    # path = os.path.join(os.path.dirname(__file__), 'index.html')
-    # self.response.out.write(template.render(path, template_values))
+
 
     return render_template("index.html", Direction=directionDummy,
                            method=test_row.method,
