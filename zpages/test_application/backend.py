@@ -39,12 +39,13 @@ def getData3():
     return test_data
 
 # Example for creating nested spans taken from opencensus-python wiki/documentation
-with tracer.span(name='span1'):
-    getData1()
-with tracer.span(name='span2'):
-    getData2()
-with tracer.span(name='span2'):
-    getData3()
+# with tracer.span(name='span1'):
+#     getData1()
+# with tracer.span(name='span2'):
+#     getData2()
+# with tracer.span(name='span2'):
+#     getData3()
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
