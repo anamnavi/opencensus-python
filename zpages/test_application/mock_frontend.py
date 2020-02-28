@@ -1,21 +1,77 @@
+# Copyright 2018, OpenCensus Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import random
+import time
 import requests
-from opencensus.trace.tracer import Tracer
+from pprint import pprint
+
 from opencensus.trace.samplers import AlwaysOnSampler
+from opencensus.trace.tracer import Tracer
+from opencensus.stats import aggregation as aggregation_module
+from opencensus.stats import measure as measure_module
 from opencensus.stats import stats as stats_module
+from opencensus.stats import view as view_module
+from opencensus.tags import tag_key as tag_key_module
+from opencensus.tags import tag_map as tag_map_module
+from opencensus.tags import tag_value as tag_value_module
+
+MiB = 1 << 20
+FRONTEND_KEY = tag_key_module.TagKey("my.org/keys/frontend")
+VIDEO_SIZE_MEASURE = measure_module.MeasureInt(
+    "my.org/measures/video_size", "size of processed videos", "By")
+VIDEO_SIZE_VIEW_NAME = "my.org/views/video_size"
+VIDEO_SIZE_DISTRIBUTION = aggregation_module.DistributionAggregation(
+    [0.0, 16.0 * MiB, 256.0 * MiB])
+VIDEO_SIZE_VIEW = view_module.View(
+    VIDEO_SIZE_VIEW_NAME, "processed video size over time", [FRONTEND_KEY],
+    VIDEO_SIZE_MEASURE, VIDEO_SIZE_DISTRIBUTION)
 
 tracer = Tracer(sampler=AlwaysOnSampler())
 
-stats = stats_module.stats
-view_manager = stats.view_manager
-stats_recorder = stats.stats_recorder
 
-with tracer.span(name='span1'):
-    r1 = requests.get('http://localhost:8000/getmethod1')
-    print("Call to method 1: ", r1.status_code, ", " + r1.text)
-with tracer.span(name='span2'):
-    r2 = requests.get('http://localhost:8000/getmethod2')
-    print("Call to method 2: ", r2.status_code, ", " + r2.text)
-with tracer.span(name='span3'):
-    r3 = requests.get('http://localhost:8000/getmethod3')
-    print("Call to method 3: ", r3.status_code, ", " + r3.text)
-    print(r3.json()['name'])
+def main():
+    stats = stats_module.stats
+    view_manager = stats.view_manager
+    stats_recorder = stats.stats_recorder
+
+    # Register view.
+    view_manager.register_view(VIDEO_SIZE_VIEW)
+
+    # Sleep for [0, 10] milliseconds to fake work.
+    time.sleep(random.randint(1, 10) / 1000.0)
+
+    # Process video.
+    with tracer.span(name='span1'):
+        r1 = requests.get('http://localhost:8000/getmethod1')
+        print("Call to method 1: ", r1.text)
+
+    # Record the processed video size.
+    tag_value = tag_value_module.TagValue("mobile-ios9.3.5")
+    tag_map = tag_map_module.TagMap()
+    tag_map.insert(FRONTEND_KEY, tag_value)
+    measure_map = stats_recorder.new_measurement_map()
+    measure_map.measure_int_put(VIDEO_SIZE_MEASURE, 25 * MiB)
+    measure_map.record(tag_map)
+
+    # Get aggregated stats and print it to console.
+    view_data = view_manager.get_view(VIDEO_SIZE_VIEW_NAME)
+    pprint(vars(view_data))
+    for k, v in view_data._tag_value_aggregation_data_map.items():
+        pprint(k)
+        pprint(vars(v))
+
+
+if __name__ == '__main__':
+    main()

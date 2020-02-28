@@ -1,16 +1,15 @@
 from flask import Flask, escape, request, render_template, jsonify
 from flask_cors import CORS
-from opencensus.trace.tracer import Tracer
-from opencensus.trace.samplers import AlwaysOnSampler
-from opencensus.stats import stats as stats_module
-
-tracer = Tracer(sampler=AlwaysOnSampler())
-
-stats = stats_module.stats
-view_manager = stats.view_manager
-stats_recorder = stats.stats_recorder
-
-
+# from opencensus.trace.tracer import Tracer
+# from opencensus.trace.samplers import AlwaysOnSampler
+# from opencensus.stats import stats as stats_module
+#
+# # determines that all traces will be sampled (instead of a percentage of all requests)
+# tracer = Tracer(sampler=AlwaysOnSampler())
+#
+# stats = stats_module.stats
+# view_manager = stats.view_manager
+# stats_recorder = stats.stats_recorder
 
 app = Flask(__name__)
 CORS(app)
@@ -37,14 +36,6 @@ def getData3():
     name = "Aasiyah Feisal"
     test_data = {'name': name}
     return test_data
-
-# Example for creating nested spans taken from opencensus-python wiki/documentation
-# with tracer.span(name='span1'):
-#     getData1()
-# with tracer.span(name='span2'):
-#     getData2()
-# with tracer.span(name='span2'):
-#     getData3()
 
 
 if __name__ == '__main__':
