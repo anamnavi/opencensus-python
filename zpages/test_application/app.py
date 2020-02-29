@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+app.py is a test Python application script that calls 3 methods, each of which
+are wrapped around a Tracer.span object that traces that call/request and represents
+that data within a span.
+"""
+
 import random
 import time
-import requests
 from pprint import pprint
 
 from opencensus.trace.samplers import AlwaysOnSampler
@@ -27,39 +32,55 @@ from opencensus.tags import tag_key as tag_key_module
 from opencensus.tags import tag_map as tag_map_module
 from opencensus.tags import tag_value as tag_value_module
 
-MiB = 1 << 20
+MIB = 1 << 20
 FRONTEND_KEY = tag_key_module.TagKey("my.org/keys/frontend")
 VIDEO_SIZE_MEASURE = measure_module.MeasureInt(
     "my.org/measures/video_size", "size of processed videos", "By")
 VIDEO_SIZE_VIEW_NAME = "my.org/views/video_size"
 VIDEO_SIZE_DISTRIBUTION = aggregation_module.DistributionAggregation(
-    [0.0, 16.0 * MiB, 256.0 * MiB])
+    [0.0, 16.0 * MIB, 256.0 * MIB])
 VIDEO_SIZE_VIEW = view_module.View(
     VIDEO_SIZE_VIEW_NAME, "processed video size over time", [FRONTEND_KEY],
     VIDEO_SIZE_MEASURE, VIDEO_SIZE_DISTRIBUTION)
 
-tracer = Tracer(sampler=AlwaysOnSampler())
 
-def getData1():
+def get_data1():
+    """
+    Return a dictionary object with name #1
+    """
     name = "Anam Navied"
     test_data = {'name': name}
     return test_data
 
-def getData2():
+
+def get_data2():
+    """
+    Return a dictionary object with name #2
+    """
     name = "Gaven Kerr"
     test_data = {'name': name}
     return test_data
 
-def getData3():
+
+def get_data3():
+    """
+    Return a dictionary object with name #3
+    """
     name = "Aasiyah Feisal"
     test_data = {'name': name}
     return test_data
 
 
 def main():
+    """
+    Initializes the objects required for recording the rpc data, creates
+    the spans, and prints out collected data.
+    """
+
     stats = stats_module.stats
     view_manager = stats.view_manager
     stats_recorder = stats.stats_recorder
+    tracer = Tracer(sampler=AlwaysOnSampler())
 
     # Register view.
     view_manager.register_view(VIDEO_SIZE_VIEW)
@@ -69,27 +90,26 @@ def main():
 
     # Process video.
     with tracer.span(name='span1'):
-        getData1()
+        get_data1()
     with tracer.span(name='span2'):
-        getData2()
+        get_data2()
     with tracer.span(name='span3'):
-        getData3()
-
+        get_data3()
 
     # Record the processed video size.
     tag_value = tag_value_module.TagValue("mobile-ios9.3.5")
     tag_map = tag_map_module.TagMap()
     tag_map.insert(FRONTEND_KEY, tag_value)
     measure_map = stats_recorder.new_measurement_map()
-    measure_map.measure_int_put(VIDEO_SIZE_MEASURE, 25 * MiB)
+    measure_map.measure_int_put(VIDEO_SIZE_MEASURE, 25 * MIB)
     measure_map.record(tag_map)
 
     # Get aggregated stats and print it to console.
     view_data = view_manager.get_view(VIDEO_SIZE_VIEW_NAME)
     pprint(vars(view_data))
-    for k, v in view_data._tag_value_aggregation_data_map.items():
+    for k, val in view_data._tag_value_aggregation_data_map.items():
         pprint(k)
-        pprint(vars(v))
+        pprint(vars(val))
 
 
 if __name__ == '__main__':
