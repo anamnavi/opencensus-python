@@ -40,6 +40,21 @@ VIDEO_SIZE_VIEW = view_module.View(
 
 tracer = Tracer(sampler=AlwaysOnSampler())
 
+def getData1():
+    name = "Anam Navied"
+    test_data = {'name': name}
+    return test_data
+
+def getData2():
+    name = "Gaven Kerr"
+    test_data = {'name': name}
+    return test_data
+
+def getData3():
+    name = "Aasiyah Feisal"
+    test_data = {'name': name}
+    return test_data
+
 
 def main():
     stats = stats_module.stats
@@ -54,8 +69,12 @@ def main():
 
     # Process video.
     with tracer.span(name='span1'):
-        r1 = requests.get('http://localhost:8000/getmethod1')
-        print("Call to method 1: ", r1.text)
+        getData1()
+    with tracer.span(name='span2'):
+        getData2()
+    with tracer.span(name='span3'):
+        getData3()
+
 
     # Record the processed video size.
     tag_value = tag_value_module.TagValue("mobile-ios9.3.5")
