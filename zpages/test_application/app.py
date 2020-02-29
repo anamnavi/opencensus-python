@@ -32,6 +32,7 @@ from opencensus.tags import tag_key as tag_key_module
 from opencensus.tags import tag_map as tag_map_module
 from opencensus.tags import tag_value as tag_value_module
 
+# constants within the video example on examples/helloworld/main.py
 MIB = 1 << 20
 FRONTEND_KEY = tag_key_module.TagKey("my.org/keys/frontend")
 VIDEO_SIZE_MEASURE = measure_module.MeasureInt(
