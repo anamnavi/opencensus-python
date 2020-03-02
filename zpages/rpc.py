@@ -69,28 +69,8 @@ def get_stats_snapshots(map, views):
 def show_page():
     direction_dummy = "Sent"
     test_row = stat_snapshot('apicall1()', False, 1, 2, 3, '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 4, 5, 6)
+    return render_template("index.html", Direction=direction_dummy, obj=test_row)
 
-
-    return render_template("index.html", Direction=direction_dummy,
-                           method=test_row.method,
-                           countMinute=test_row.countMinute,
-                           countHour=test_row.countHour,
-                           countTotal=test_row.countTotal,
-                           avgLatencyMinute=test_row.avgLatencyMinute,
-                           avgLatencyHour=test_row.avgLatencyHour,
-                           avgLatencyTotal=test_row.avgLatencyTotal,
-                           rpcRateMinute=test_row.rpcRateMinute,
-                           rpcRateHour=test_row.rpcRateHour,
-                           rpcRateTotal=test_row.rpcRateTotal,
-                           inputRateMinute=test_row.inputRateMinute,
-                           inputRateHour=test_row.inputRateHour,
-                           inputRateTotal=test_row.inputRateTotal,
-                           outputRateMinute=test_row.outputRateMinute,
-                           outputRateHour=test_row.outputRateHour,
-                           outputRateTotal=test_row.outputRateTotal,
-                           errorsMinute=test_row.errorsMinute,
-                           errorsHour=test_row.errorsHour,
-                           errorsTotal=test_row.errorsTotal)
 
 if __name__ == '__main__':
     app.run(debug=True)
