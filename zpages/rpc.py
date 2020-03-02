@@ -4,12 +4,13 @@ and displaying it on a RPC zpage.
 
 Uses stats, tracer, view_manager objects from opencensus framework
 """
-from flask import Flask, escape, request, render_template
-from typing import NamedTuple
+import datetime
 import sys
+from flask import Flask, escape, request, render_template
+from typing import NamedTuple, List
 from opencensus.stats import view as view_module
 from opencensus.stats import view_manager as view_manager_module
-import datetime
+
 
 
 app = Flask(__name__)
@@ -50,17 +51,37 @@ class stat_group(NamedTuple):
     stores and represents the row data (stat_snapshot) as well as which table this would fall under
     on the rpc zpage tables
 
+    :type direction string
+    :param direction: if the rpc is sent or received
+
+    :type list of class:`~opencensus.zpages.rpc.stat_snapshot`
+    :param snapshots: list of stat_snapshot objects for that specific direction
 
     """
     direction: str
-    snapshots: list # of type statSnapshot, can't specify explicitly but will only consist of this
+    snapshots: List[stat_snapshot]
 
 
 class stat_page(NamedTuple):
-    statgroups: list # of type statGroup, can't specify explicitly but will only consist of this
+    """
+    stores and represents all rpc data across different groups and rows of data
+
+    :type list of class: `~opencensus.zpages.rpc.stat_group`
+    :param statgroups: list of stat groups (received and sent) that together make up a page of stat data
+    """
+    statgroups: List[stat_group]
 
 
 def get_stats_snapshots(map, views):
+    """
+    processes the ingested stats data and prints it out
+
+    : type map: `~opencensus.zpages.rpc.stat_snapshot` todo replace
+    : param map: todo
+
+    : type views: todo
+    : param view: todo
+    """
     for view in views :
         view_data = manager.get_view(manager,view.name)
         if view_data is None:
