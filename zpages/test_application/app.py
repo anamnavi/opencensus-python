@@ -108,7 +108,8 @@ def main():
     # Get aggregated stats and print it to console.
     view_data = view_manager.get_view(VIDEO_SIZE_VIEW_NAME)
     pprint(vars(view_data))
-    for k, val in view_data._tag_value_aggregation_data_map.items():
+    # temp pylint fix: change back to protected member method by adding underscore in front
+    for k, val in view_data.tag_value_aggregation_data_map.items():
         pprint(k)
         pprint(vars(val))
 

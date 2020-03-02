@@ -1,3 +1,9 @@
+"""
+rpc.py is for collecting rpc data from an application, processing it,
+and displaying it on a RPC zpage.
+
+Uses stats, tracer, view_manager objects from opencensus framework
+"""
 from flask import Flask, escape, request, render_template
 from typing import NamedTuple
 import sys
@@ -12,7 +18,11 @@ manager = view_manager_module.ViewManager()
 
 print(sys.path)
 
+
 class stat_snapshot(NamedTuple):
+    """
+    stores and represents the essential rpc data needed for a row displayed on the rpc zpage
+    """
     method: str
     received: bool
     countMinute: int
@@ -36,6 +46,12 @@ class stat_snapshot(NamedTuple):
 
 
 class stat_group(NamedTuple):
+    """
+    stores and represents the row data (stat_snapshot) as well as which table this would fall under
+    on the rpc zpage tables
+
+
+    """
     direction: str
     snapshots: list # of type statSnapshot, can't specify explicitly but will only consist of this
 
