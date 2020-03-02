@@ -12,7 +12,7 @@ manager = view_manager_module.ViewManager()
 
 print(sys.path)
 
-class statSnapshot(NamedTuple):
+class stat_snapshot(NamedTuple):
     method: str
     received: bool
     countMinute: int
@@ -35,36 +35,43 @@ class statSnapshot(NamedTuple):
     errorsTotal: int
 
 
-class statGroup(NamedTuple):
+class stat_group(NamedTuple):
     direction: str
     snapshots: list # of type statSnapshot, can't specify explicitly but will only consist of this
 
 
-class statPage(NamedTuple):
+class stat_page(NamedTuple):
     statgroups: list # of type statGroup, can't specify explicitly but will only consist of this
 
-def getStatsSnapshots(map, views) :
+
+def get_stats_snapshots(map, views):
     for view in views :
-      view_data = manager.get_view(manager,view.name)
-      if view_data is None:
-        continue
-      for key in view_data.tag_value_aggregation_data_map(view_data).keys():
-        method = "" if key is None else key.asString()
-        snapshot = statSnapshot(map.get(method))
-        if (snapshot is None) :
-          snapshot = statSnapshot()
-          map.put(method, snapshot)
+        view_data = manager.get_view(manager,view.name)
+        if view_data is None:
+            continue
+        for entry in view_data.tag_value_aggregation_data_map():
+            tag_values = entry # Entry<List</*@Nullable*/ TagValue>, AggregationData> entry
+        #     if len(tag_values):
+        #
+        #
+        # old
+        # for key in view_data.tag_value_aggregation_data_map(view_data).keys():
+        #     method = "" if key is None else key.asString()
+        #     snapshot = stat_snapshot(map.get(method))
+        #     if (snapshot is None) :
+        #         snapshot = stat_snapshot()
+        #         map.put(method, snapshot)
 
         #TODO getStats(snapshot, entry.getValue(), view, view_data.getWindowData());
 
 
 @app.route('/')
-def showPage():
-    directionDummy = "Sent"
-    test_row = statSnapshot('apicall1()', False, 1, 2, 3, '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 4, 5, 6)
+def show_page():
+    direction_dummy = "Sent"
+    test_row = stat_snapshot('apicall1()', False, 1, 2, 3, '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 4, 5, 6)
 
 
-    return render_template("index.html", Direction=directionDummy,
+    return render_template("index.html", Direction=direction_dummy,
                            method=test_row.method,
                            countMinute=test_row.countMinute,
                            countHour=test_row.countHour,
