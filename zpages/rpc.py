@@ -65,8 +65,8 @@ def get_stats_snapshots(map, views):
         #TODO getStats(snapshot, entry.getValue(), view, view_data.getWindowData());
 
 
-@app.route('/')
-def show_page():
+@app.route('/', methods=['GET'])
+def main():
     direction_dummy = "Sent"
     test_row = stat_snapshot('apicall1()', False, 1, 2, 3, '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', '2020-02-18 23:46:31.243168', 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 4, 5, 6)
     return render_template("index.html", Direction=direction_dummy, obj=test_row)
