@@ -81,12 +81,7 @@ class RpczZPageHandler():
     NANOS_PER_SECOND = 1e9
     BYTES_PER_KB = 1024
 
-    RPC_STATS_TYPES = ("Count", \
-        "Avg latency (ms)", \
-        "Rate (rpc/s)", \
-        "Input (kb/s)", \
-        "Output (kb/s)", \
-        "Errors")
+    RPC_STATS_TYPES = ("Count", "Avg latency (ms)", "Rate (rpc/s)", "Input (kb/s)", "Output (kb/s)", "Errors")
 
     CLIENT_RPC_CUMULATIVE_VIEWS = (
         RPC_CLIENT_ERROR_COUNT_VIEW,
@@ -188,12 +183,9 @@ class RpczZPageHandler():
         out.write("<html lang=\"en\"><head>\n")
         out.write("<meta charset=\"utf-8\">\n")
         out.write("<title>RpcZ</title>\n")
-        out.write("<link rel=\"shortcut icon\" \
-            href=\"https://opencensus.io/images/favicon.ico\"/>\n")
-        out.write("<link \
-            href=\"https://fonts.googleapis.com/css?family=Open+Sans:300\"rel=\"stylesheet\">\n")
-        out.write("<link \
-            href=\"https://fonts.googleapis.com/css?family=Roboto\"" + "rel=\"stylesheet\">\n")
+        out.write("<link rel=\"shortcut icon\" href=\"https://opencensus.io/images/favicon.ico\"/>\n")
+        out.write("<link href=\"https://fonts.googleapis.com/css?family=Open+Sans:300\"rel=\"stylesheet\">\n")
+        out.write("<link href=\"https://fonts.googleapis.com/css?family=Roboto\"" + "rel=\"stylesheet\">\n")
         self.emit_style(out)
         out.write("</head>\n")
         out.write("<body>\n")
@@ -206,27 +198,26 @@ class RpczZPageHandler():
         out.close()
 
     def emit_html_body(self, out):
-        out.write("<p class=\"header\"><img class=\"oc\" \
-            src=\"https://opencensus.io/img/logo-sm.svg\" />Open<span>Census</span></p>")
+        out.write("<p class=\"header\"><img class=\"oc\" src=\"https://opencensus.io/img/logo-sm.svg\" />Open<span>Census</span></p>")
         out.write("<h1>RPC Stats</h1>")
         out.write("<p></p>")
         self.emit_summary_table(out, False)
         self.emit_summary_table(out, True)
 
-    def emit_summary_table(self, out, is_received):
-        format_str = "<h2><table class=\"title\"><tr align=left><td><font size=+2> \
-            {}</font></td></tr></table></h2>"
-        format_str.format(self.RECEIVED if is_received else self.SENT)
+    def emit_summary_table(self, out, isReceived):
+        format_str = "<h2><table class=\"title\"><tr align=left><td><font size=+2>{}</font></td></tr></table></h2>"
+        format_str.format(self.RECEIVED if isReceived else self.SENT)
         out.write(format_str)
         format_str = "<table frame=box cellspacing=0 cellpadding=2>"
         out.write(format_str)
         self.emit_summary_table_header(out)
-        snapshots = self.get_stats_snapshots(is_received)
+        snapshots = self.get_stats_snapshots(isReceived)
         for entry in snapshots: #check what snapshot returns
             self.emit_summary_table_rows(out, snapshots[entry], entry) #check what entry contrains
         out.write("</table>")
         out.write("<br />")
 
+    
     def emit_summary_table_header(self, out):
         #First line.
         out.write("<tr bgcolor=#A94442>")
@@ -245,6 +236,7 @@ class RpczZPageHandler():
             out.write("<th class=\"borderLB\" align=center>Min.</th>\n")
             out.write("<th class=\"borderLB\" align=center>Hr.</th>\n")
             out.write("<th class=\"borderLB\" align=center>Tot.</th>")
+        
 
     def emit_summary_table_rows(self, out, snapshot, method):
         out.write("<tr>")
@@ -302,12 +294,11 @@ class RpczZPageHandler():
         return stats_map
 
     def get_snapshots(self, data_map, views):
-        for view in views:
+        for view in views :
             view_data = self.manager.get_view(view.name)
             if view_data is None:
                 continue
-            for entry in view_data.tag_value_aggregation_data_map().entrySet:
-                #confused about what type of object tag_value_aggregation_data_map returns
+            for entry in view_data.tag_value_aggregation_data_map().entrySet: #confused about what type of object tag_value_aggregation_data_map returns
                 tag_values = entry #
                 if len(tag_values) == 1:
                     tag_value = tag_values[0]
@@ -315,7 +306,7 @@ class RpczZPageHandler():
                     tag_value = tag_values[1]
                 method = "" if tag_value is None else tag_value
                 snapshot = StatSnapshot(data_map.get(method))
-                if snapshot is None:
+                if (snapshot is None) :
                     snapshot = StatSnapshot()
                     data_map.put(method, snapshot)
                 self.get_stats(snapshot, entry.get_value(), view, view_data.get_window_data())
@@ -324,16 +315,13 @@ class RpczZPageHandler():
     def get_stats(self, snapshot, data, view, window_data):
         if view == RPC_CLIENT_ROUNDTRIP_LATENCY_VIEW or view == RPC_SERVER_SERVER_LATENCY_VIEW:
             snapshot.avg_latency_total = data.mean_data()
-        elif view == RPC_CLIENT_ROUNDTRIP_LATENCY_MINUTE_VIEW \
-            or view == RPC_SERVER_SERVER_LATENCY_MINUTE_VIEW:
+        elif view == RPC_CLIENT_ROUNDTRIP_LATENCY_MINUTE_VIEW or view == RPC_SERVER_SERVER_LATENCY_MINUTE_VIEW:
             snapshot.avg_latency_minute = data.mean_data()
-        elif view == RPC_CLIENT_ROUNDTRIP_LATENCY_HOUR_VIEW \
-            or view == RPC_SERVER_SERVER_LATENCY_HOUR_VIEW:
+        elif view == RPC_CLIENT_ROUNDTRIP_LATENCY_HOUR_VIEW or view == RPC_SERVER_SERVER_LATENCY_HOUR_VIEW:
             snapshot.avgLatencyLastHour = data.mean_data()
         elif view == RPC_CLIENT_ERROR_COUNT_VIEW or view == RPC_SERVER_ERROR_COUNT_VIEW:
             snapshot.errors_total = data.count_data()
-        elif view == RPC_CLIENT_ERROR_COUNT_MINUTE_VIEW \
-            or view == RPC_SERVER_ERROR_COUNT_MINUTE_VIEW:
+        elif view == RPC_CLIENT_ERROR_COUNT_MINUTE_VIEW or view == RPC_SERVER_ERROR_COUNT_MINUTE_VIEW:
             snapshot.errors_minute = data.count_data()
         elif view == RPC_CLIENT_ERROR_COUNT_HOUR_VIEW or view == RPC_SERVER_ERROR_COUNT_HOUR_VIEW:
             snapshot.errors_hour = data.count_data()
@@ -342,38 +330,26 @@ class RpczZPageHandler():
                                         * data.mean_data() \
                                         / self.BYTES_PER_KB \
                                         / self.get_duration_in_secs(window_data)
-        elif view == RPC_CLIENT_REQUEST_BYTES_MINUTE_VIEW \
-            or view == RPC_SERVER_REQUEST_BYTES_MINUTE_VIEW:
-            snapshot.input_rate_minute = data.mean_data() * data.count_data() \
-                / self.BYTES_PER_KB / self.SECONDS_PER_MINUTE
-        elif view == RPC_CLIENT_REQUEST_BYTES_HOUR_VIEW \
-            or view == RPC_SERVER_REQUEST_BYTES_HOUR_VIEW:
-            snapshot.input_rate_hour = data.mean_data() * data.count_data() \
-                / self.BYTES_PER_KB / self.SECONDS_PER_HOUR
-        elif view == RPC_CLIENT_RESPONSE_BYTES_VIEW \
-            or view == RPC_SERVER_RESPONSE_BYTES_VIEW:
+        elif view == RPC_CLIENT_REQUEST_BYTES_MINUTE_VIEW or view == RPC_SERVER_REQUEST_BYTES_MINUTE_VIEW:
+            snapshot.input_rate_minute = data.mean_data() * data.count_data() / self.BYTES_PER_KB / self.SECONDS_PER_MINUTE
+        elif view == RPC_CLIENT_REQUEST_BYTES_HOUR_VIEW or view == RPC_SERVER_REQUEST_BYTES_HOUR_VIEW:
+            snapshot.input_rate_hour = data.mean_data() * data.count_data() / self.BYTES_PER_KB / self.SECONDS_PER_HOUR;
+        elif view == RPC_CLIENT_RESPONSE_BYTES_VIEW or view == RPC_SERVER_RESPONSE_BYTES_VIEW:
             snapshot.output_rate_total = data.count_data() \
                     * data.mean_data() \
                     / self.BYTES_PER_KB \
                     / self.get_duration_in_secs(window_data)
-        elif view == RPC_CLIENT_RESPONSE_BYTES_MINUTE_VIEW \
-            or view == RPC_SERVER_RESPONSE_BYTES_MINUTE_VIEW:
-            snapshot.output_rateminute = data.mean_data() * data.count_data() \
-                / self.BYTES_PER_KB / self.SECONDS_PER_MINUTE
-        elif view == RPC_CLIENT_RESPONSE_BYTES_HOUR_VIEW \
-            or view == RPC_SERVER_RESPONSE_BYTES_HOUR_VIEW:
-            snapshot.output_rate_hour = data.mean_data() * data.count_data() \
-                / self.BYTES_PER_KB / self.SECONDS_PER_HOUR
-        elif view == RPC_CLIENT_STARTED_COUNT_MINUTE_VIEW \
-            or view == RPC_SERVER_STARTED_COUNT_MINUTE_VIEW:
+        elif view == RPC_CLIENT_RESPONSE_BYTES_MINUTE_VIEW or view == RPC_SERVER_RESPONSE_BYTES_MINUTE_VIEW:
+            snapshot.output_rateminute = data.mean_data() * data.count_data() / self.BYTES_PER_KB / self.SECONDS_PER_MINUTE;
+        elif view == RPC_CLIENT_RESPONSE_BYTES_HOUR_VIEW or view == RPC_SERVER_RESPONSE_BYTES_HOUR_VIEW:
+            snapshot.output_rate_hour = data.mean_data() * data.count_data() / self.BYTES_PER_KB / self.SECONDS_PER_HOUR
+        elif view == RPC_CLIENT_STARTED_COUNT_MINUTE_VIEW or view == RPC_SERVER_STARTED_COUNT_MINUTE_VIEW:
             snapshot.count_minute = data.count_data()
             snapshot.rpc_rate_minute = snapshot.count_minute / self.SECONDS_PER_MINUTE
-        elif view == RPC_CLIENT_STARTED_COUNT_HOUR_VIEW \
-            or view == RPC_SERVER_STARTED_COUNT_HOUR_VIEW:
+        elif view == RPC_CLIENT_STARTED_COUNT_HOUR_VIEW or view == RPC_SERVER_STARTED_COUNT_HOUR_VIEW:
             snapshot.count_hour = data.count_data()
             snapshot.rpc_rate_hour = snapshot.count_hour / self.SECONDS_PER_HOUR
-        elif view == RPC_CLIENT_STARTED_COUNT_CUMULATIVE_VIEW \
-            or view == RPC_SERVER_STARTED_COUNT_CUMULATIVE_VIEW:
+        elif view == RPC_CLIENT_STARTED_COUNT_CUMULATIVE_VIEW or view == RPC_SERVER_STARTED_COUNT_CUMULATIVE_VIEW:
             snapshot.count_total = data.count_data()
             snapshot.rpc_rate_total = snapshot.count_total \
                 / self.get_duration_in_secs(window_data)
@@ -383,16 +359,31 @@ class RpczZPageHandler():
         d1 = datetime.strptime(cumulative_data.end_time, "%Y-%m-%d %H:%M:%S.%f")
         d2 = datetime.strptime(cumulative_data.start_time, "%Y-%m-%d %H:%M:%S.%f")
         self.to_double_seconds(d1-d2)
-
+    
     def to_double_seconds(self, cumulative_data):
         time.mktime(cumulative_data.timetuple())
-
+    
     def create(self, manager):
         return self.__init__(manager)
-
+    
     def __init__(self, manager):
         self.manager = manager
-        ZPageHandler.register(RpczZPageHandler)
+
+
+
+ZPageHandler.register(RpczZPageHandler)
+
+# from flask import Flask, escape, request, render_template
+# from opencensus.stats import view as view_module
+# from opencensus.stats import view_manager as view_manager_module
+
+
+
+# app = Flask(__name__)
+
+# manager = view_manager_module.ViewManager()
+
+# print(sys.path)
 
 
 class StatSnapshot(NamedTuple):
@@ -423,8 +414,7 @@ class StatSnapshot(NamedTuple):
 
 # class stat_group(NamedTuple):
 #     """
-#     stores and represents the row data (stat_snapshot) as
-# well as which table this would fall under
+#     stores and represents the row data (stat_snapshot) as well as which table this would fall under
 #     on the rpc zpage tables
 
 #     :type direction string
@@ -443,8 +433,7 @@ class StatSnapshot(NamedTuple):
 #     stores and represents all rpc data across different groups and rows of data
 
 #     :type list of class: `~opencensus.zpages.rpc.stat_group`
-#     :param statgroups: list of stat groups (received and sent) that
-# together make up a page of stat data
+#     :param statgroups: list of stat groups (received and sent) that together make up a page of stat data
 #     """
 #     statgroups: List[stat_group]
 
