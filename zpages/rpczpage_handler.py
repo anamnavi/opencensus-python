@@ -1,6 +1,8 @@
+import io
 from zpage_handler import ZPageHandler
 from opencensus.stats.view_manager import ViewManager
-import io
+
+from style import Style
 
 from RpcViewConstants import RPC_CLIENT_ERROR_COUNT_HOUR_VIEW
 from RpcViewConstants import RPC_CLIENT_ERROR_COUNT_MINUTE_VIEW
@@ -166,65 +168,58 @@ class RpczZPageHandler():
         return self.RPCZ_URL
 
     # Here we will need to do HTML writing
-    def emitStyle(self, out): 
+    def emitStyle(self, out):
         print("TODO")
-        # out.write("<style>\n")
-        # out.write(Style.style)
-        # out.write("</style>\n")
+        out.write("<style>\n")
+        out.write(Style.style)
+        out.write("</style>\n")
 
-    def emitHtml(self, dict, out):
+    def emitHtml(self, out):
         print("TODO")
-#     PrintWriter out =
-#         new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream, Charsets.UTF_8)));
-#     out.write("<!DOCTYPE html>\n");
-#     out.write("<html lang=\"en\"><head>\n");
-#     out.write("<meta charset=\"utf-8\">\n");
-#     out.write("<title>RpcZ</title>\n");
-#     out.write("<link rel=\"shortcut icon\" href=\"https://opencensus.io/images/favicon.ico\"/>\n");
-#     out.write(
-#         "<link href=\"https://fonts.googleapis.com/css?family=Open+Sans:300\""
-#             + "rel=\"stylesheet\">\n");
-#     out.write(
-#         "<link href=\"https://fonts.googleapis.com/css?family=Roboto\"" + "rel=\"stylesheet\">\n");
-#     emitStyle(out);
-#     out.write("</head>\n");
-#     out.write("<body>\n");
-#     try {
-#       emitHtmlBody(out);
-#     } catch (Throwable t) {
-#       out.write("Errors while generate the HTML page " + t);
-#     }
-#     out.write("</body>\n");
-#     out.write("</html>\n");
-#     out.close();
-#   }
+        out = io.StringIO()
+        out.write("<!DOCTYPE html>\n")
+        out.write("<html lang=\"en\"><head>\n")
+        out.write("<meta charset=\"utf-8\">\n")
+        out.write("<title>RpcZ</title>\n")
+        out.write("<link rel=\"shortcut icon\" href=\"https://opencensus.io/images/favicon.ico\"/>\n")
+        out.write("<link href=\"https://fonts.googleapis.com/css?family=Open+Sans:300\"rel=\"stylesheet\">\n")
+        out.write("<link href=\"https://fonts.googleapis.com/css?family=Roboto\"" + "rel=\"stylesheet\">\n")
+        self.emitStyle(out)
+        out.write("</head>\n")
+        out.write("<body>\n")
+        try:
+            emitHtmlBody(self, out)
+        except:
+            out.write("Errors while generate the HTML page ")
+        out.write("</body>\n")
+        out.write("</html>\n")
+        out.close()
 
-#   private void emitHtmlBody(PrintWriter out) {
-#     Formatter formatter = new Formatter(out, Locale.US);
-#     out.write(
-#         "<p class=\"header\">"
-#             + "<img class=\"oc\" src=\"https://opencensus.io/img/logo-sm.svg\" />"
-#             + "Open<span>Census</span></p>");
-#     out.write("<h1>RPC Stats</h1>");
-#     out.write("<p></p>");
-#     emitSummaryTable(out, formatter, /* isReceived= */ false);
-#     emitSummaryTable(out, formatter, /* isReceived= */ true);
-#   }
+    # private void emitHtmlBody(PrintWriter out) {
+    #     Formatter formatter = new Formatter(out, Locale.US);
+    #     out.write(
+    #         "<p class=\"header\">"
+    #             + "<img class=\"oc\" src=\"https://opencensus.io/img/logo-sm.svg\" />"
+    #             + "Open<span>Census</span></p>");
+    #     out.write("<h1>RPC Stats</h1>");
+    #     out.write("<p></p>");
+    #     emitSummaryTable(out, formatter, /* isReceived= */ false);
+    #     emitSummaryTable(out, formatter, /* isReceived= */ true);
+    # }
 
-#   private void emitSummaryTable(PrintWriter out, Formatter formatter, boolean isReceived) {
-#     formatter.format(
-#         "<h2><table class=\"title\"><tr align=left><td><font size=+2>"
-#             + "%s</font></td></tr></table></h2>",
-#         (isReceived ? RECEIVED : SENT));
-#     formatter.format("<table frame=box cellspacing=0 cellpadding=2>");
-#     emitSummaryTableHeader(out, formatter);
-#     Map<String, StatsSnapshot> snapshots = getStatsSnapshots(isReceived);
-#     for (Entry<String, StatsSnapshot> entry : snapshots.entrySet()) {
-#       emitSummaryTableRows(out, formatter, entry.getValue(), entry.getKey());
-#     }
-#     out.write("</table>");
-#     out.write("<br />");
-#   }
+    # private void emitSummaryTable(PrintWriter out, Formatter formatter, boolean isReceived) {
+    #     formatter.format(
+    #         "<h2><table class=\"title\"><tr align=left><td><font size=+2>"
+    #             + "%s</font></td></tr></table></h2>",
+    #         (isReceived ? RECEIVED : SENT));
+    #     formatter.format("<table frame=box cellspacing=0 cellpadding=2>");
+    #     emitSummaryTableHeader(out, formatter);
+    #     Map<String, StatsSnapshot> snapshots = getStatsSnapshots(isReceived);
+    #     for (Entry<String, StatsSnapshot> entry : snapshots.entrySet()) {
+    #     emitSummaryTableRows(out, formatter, entry.getValue(), entry.getKey());
+    #     }
+    #     out.write("</table>");
+    #     out.write("<br />");
 
 
 ZPageHandler.register(RpczZPageHandler)
