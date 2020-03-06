@@ -60,6 +60,9 @@ RPC_SERVER_UNCOMPRESSED_RESPONSE_BYTES = tag_key("server/uncompressed_response_b
 class ZPage_Tester():
     """
     class used to represent the application that sends data over to the zpagehandler classes
+
+    this is modeled after the java ZPageTester.java file:
+    https://github.com/census-instrumentation/opencensus-java/blob/660e8f375bb483a3eb817940b3aa8534f86da314/examples/src/main/java/io/opencensus/examples/zpages/ZPagesTester.java
     """
 
     # tagger = tag.getTagger(); #of type Tagger in java todo: create this class?
