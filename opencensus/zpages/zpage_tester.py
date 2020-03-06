@@ -3,6 +3,7 @@ from opencensus.tags import tag_value as tag_value_module
 from opencensus.stats import stats
 from opencensus.trace import tracer
 from opencensus.tags import tag
+from opencensus.tags import tagger
 from opencensus.tags import tag_value
 from opencensus.tags import tag_key
 from opencensus.zpages import zpage_handlers
