@@ -21,6 +21,7 @@ that data within a span.
 import random
 import time
 from pprint import pprint
+import requests
 
 from opencensus.trace.samplers import AlwaysOnSampler
 from opencensus.trace.tracer import Tracer
@@ -52,43 +53,16 @@ VIDEO_SIZE_VIEW = view_module.View(
     VIDEO_SIZE_MEASURE, VIDEO_SIZE_DISTRIBUTION)
 
 
-def get_data1():
-    """
-    Return a dictionary object with name #1
-    """
-    name = "Anam Navied"
-    test_data = {'name': name}
-    return test_data
-
-
-def get_data2():
-    """
-    Return a dictionary object with name #2
-    """
-    name = "Gaven Kerr"
-    test_data = {'name': name}
-    return test_data
-
-
-def get_data3():
-    """
-    Return a dictionary object with name #3
-    """
-    name = "Aasiyah Feisal"
-    test_data = {'name': name}
-    return test_data
-
-
 def main():
     """
     Initializes the objects required for recording the rpc data, creates
     the spans, and prints out collected data.
     """
 
-    config_integration.trace_integrations() #fix ['httplib']
+    config_integration.trace_integrations(['httplib'])
 
     tracer = tracer_module.Tracer(
-        exporter=file_exporter.FileExporter(file_name='traces'),
+        exporter=file_exporter.FileExporter(file_name='anam_traces.json'),
         propagator=google_cloud_format.GoogleCloudFormatPropagator(),
         sampler=ProbabilitySampler(rate=0.5),
     )
@@ -106,11 +80,12 @@ def main():
 
     # Process video.
     with tracer.span(name='span1'):
-        get_data1()
+        r1 = requests.get('http://localhost:8000/getdata1')
+        # get_data1()
     with tracer.span(name='span2'):
-        get_data2()
+        r2 = requests.get('http://localhost:8000/getdata2')
     with tracer.span(name='span3'):
-        get_data3()
+        r3 = requests.get('http://localhost:8000/getdata3')
 
     # Record the processed video size.
     tag_value = tag_value_module.TagValue("mobile-ios9.3.5")
@@ -127,6 +102,9 @@ def main():
     for k, val in view_data.tag_value_aggregation_data_map.items():
         pprint(k)
         pprint(vars(val))
+
+    # tracer.exporter.emit(tracer.current_span())
+    tracer.exporter.export()
 
 
 if __name__ == '__main__':
