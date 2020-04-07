@@ -103,7 +103,7 @@ def main():
         pprint(k)
         pprint(vars(val))
 
-    # tracer.exporter.emit(tracer.current_span())
+    tracer.exporter.emit(tracer.current_span())
     tracer.exporter.export()
 
 
