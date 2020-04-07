@@ -2,6 +2,7 @@ from deprecated import deprecated
 from opencensus.tags import tag_key
 from opencensus.grpc import measure, measure_double, measure_long
 
+
 class RPCMeasureConstants():
     """
     constants for collecting RPC stats
