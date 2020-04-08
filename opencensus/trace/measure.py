@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
+from opencensus.trace import tracer
 
-
-class Measure():
+class Measure:
     """
     defines Measurement taken by OpenCensus library
     """

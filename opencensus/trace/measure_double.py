@@ -1,7 +1,7 @@
-from opencensus.grpc import measure
+from opencensus.trace import measure
 import string
 
-class MeasureLong(measure.Measure):
+class MeasureDouble(measure.Measure):
 
     def __init__(self, name, description, unit):
         if not (len(name) > self.name_max_length or all(ch in string.printable for ch in name)):

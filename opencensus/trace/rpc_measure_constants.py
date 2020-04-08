@@ -1,6 +1,5 @@
-from deprecated import deprecated
 from opencensus.tags import tag_key
-from opencensus.grpc import measure, measure_double, measure_long
+from opencensus.trace import measure_double, measure_long
 
 
 class RPCMeasureConstants():
@@ -39,13 +38,13 @@ class RPCMeasureConstants():
                                                                      self.count)
         grpc_client_sent_bytes_per_rpc = measure_double.MeasureDouble("grpc.io/client/sent_bytes_per_rpc",
                                                                   "Total bytes sent across all request messages per RPC",
-                                                                  self.byte)
+                                                                      self.byte)
         grpc_client_received_messages_per_rpc = measure_long.MeasureLong("grpc.io/client/received_messages_per_rpc",
                                                                          "Number of response messages received per RPC",
                                                                          self.count)
         grpc_client_received_bytes_per_rpc = measure_double.MeasureDouble("grpc.io/client/received_bytes_per_rpc",
                                                                       "Total bytes received across all response messages per RPC",
-                                                                      self.byte)
+                                                                          self.byte)
         grpc_client_roundtrip_latency = measure_double.MeasureDouble("grpc.io/client/roundtrip_latency",
                                                                      "Time between first byte of request sent to last byte of response received or terminal error.",
                                                                      self.millisecond)
@@ -54,7 +53,7 @@ class RPCMeasureConstants():
                                                                   self.millisecond)
         grpc_client_started_rpcs = measure_long.MeasureLong("grpc.io/client/started_rpcs",
                                                              "Number of started client RPCs.",
-                                                             self.count)
+                                                            self.count)
         grpc_client_sent_messages_per_method = measure_long.MeasureLong("grpc.io/client/sent_messages_per_method",
                                                                         "Total messages sent per method.",
                                                                         self.count)
