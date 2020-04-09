@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-from .measure import Measure
+import measure
 import string
 
 
-class MeasureLong(Measure):
+class MeasureLong(measure.Measure):
 
     def __init__(self, name, description, unit):
         if not (len(name) > self.name_max_length or all(ch in string.printable for ch in name)):

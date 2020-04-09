@@ -1,4 +1,4 @@
-from opencensus.trace import measure
+import measure
 import string
 
 class MeasureDouble(measure.Measure):

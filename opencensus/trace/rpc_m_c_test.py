@@ -1,7 +1,7 @@
 import unittest
 
-from opencensus.trace import rpc_measure_constants
-
+# from opencensus.trace import rpc_measure_constants
+import rpc_measure_constants
 
 # from opencensus.grpc.rpc_measure_constants import RPCMeasureConstants
 

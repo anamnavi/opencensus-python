@@ -1,6 +1,7 @@
 from opencensus.tags import tag_key
-from opencensus.trace import measure_double, measure_long
-
+# from opencensus.trace import measure_double, measure_long
+import measure_long
+import measure_double
 
 class RPCMeasureConstants():
     """
