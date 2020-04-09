@@ -1,7 +1,7 @@
-import measure
+import measure_old
 import string
 
-class MeasureDouble(measure.Measure):
+class MeasureDouble(measure_old.Measure):
 
     def __init__(self, name, description, unit):
         if not (len(name) > self.name_max_length or all(ch in string.printable for ch in name)):

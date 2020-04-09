@@ -1,25 +1,33 @@
 #!/usr/bin/env python3
-from opencensus.trace import tracer
+import string
+
+name_max_length = 255
+error_msg_invalid_name = f"Name should be a ASCII string with a length no greater than {name_max_length} characters."
+
 
 class Measure:
-    """
-    defines Measurement taken by OpenCensus library
-    """
-
-    def __new__(cls):
-        name_max_length = 255
-        error_msg_invalid_name = f"Name should be a ASCII string with a length no greater than {name_max_length} characters."
-        return object.__new__(cls)
+    def __init__(self, name, description, unit):
+        if not (len(name) > name_max_length or all(ch in string.printable for ch in name)):
+            raise ValueError(error_msg_invalid_name)
+        self.name = name
+        self.description = description
+        self.unit = unit
 
     def get_name(self):
-        return
+        return self.name
 
     def get_description(self):
-        return
+        return self.description
 
     def get_unit(self):
-        return
+        return self.unit
 
-    def create_double(self):
-        return
+    def match(self):
+        """
+        todo: implement later
+        will distinguish measure double from measure long
+        """
+        pass
+
+
 

@@ -15,8 +15,6 @@
 
 from opencensus.trace.span import Span  # original
 import measure
-import measure_long
-import measure_double
 import rpc_measure_constants
 
 __all__ = ['Span']  # modified this to add Measure
