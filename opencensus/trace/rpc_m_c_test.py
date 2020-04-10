@@ -5,7 +5,7 @@ import rpc_measure_constants
 
 # from opencensus.grpc.rpc_measure_constants import RPCMeasureConstants
 
-class RPCMCTests(unittest.TestCase):
+class RPCMCTest(unittest.TestCase):
 
     def setUp(self):
         self.rpc_measure = rpc_measure_constants.RPCMeasureConstants()
