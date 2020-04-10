@@ -13,8 +13,7 @@ class RPCMeasureConstants():
 
     def __init__(self):
         """
-        needs fixing.
-        todo: do I put all the RPC constant fields in here?
+        contains all the RPC constants as in the Java implementation
         """
 
         # client tags
