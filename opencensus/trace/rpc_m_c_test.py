@@ -18,16 +18,16 @@ class RPCMCTest(unittest.TestCase):
         """
         self.assertEqual(self.rpc_measure.grpc_client_sent_messages_per_rpc.get_unit(),
                          "1",
-                         "unit not set correctly on init")
+                         "grpc_client_sent_messages_per_rpc not set correctly on init")
         self.assertEqual(self.rpc_measure.grpc_client_sent_bytes_per_rpc.get_description(),
                          "Total bytes sent across all request messages per RPC",
-                         "description not set correctly on init")
+                         "grpc_client_sent_bytes_per_rpc not set correctly on init")
         self.assertEqual(self.rpc_measure.grpc_client_received_messages_per_rpc.get_name(),
                          "grpc.io/client/received_messages_per_rpc",
-                         "name not set correctly on init")
+                         "grpc_client_received_messages_per_rpc not set correctly on init")
         self.assertEqual(self.rpc_measure.grpc_client_received_bytes_per_rpc.get_unit(),
                          "by",
-                         "unit not set correctly upon init")
+                         "grpc_client_received_bytes_per_rpc not set correctly upon init")
         self.assertEqual(self.rpc_measure.grpc_client_roundtrip_latency.get_name(),
                          "grpc.io/client/roundtrip_latency",
                          "grpc_client_roundtrip_latency not initialized correctly")
