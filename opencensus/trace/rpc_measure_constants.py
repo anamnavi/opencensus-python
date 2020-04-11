@@ -17,14 +17,18 @@ class RPCMeasureConstants():
         """
 
         # client tags
+
         # gRPC server status code received, e.g. OK, CANCELLED, DEADLINE_EXCEEDED
         self.grpc_client_status = tag_key.TagKey("grpc_client_status")
+
         # Full gRPC method name, including package, service and method, e.g. google.bigtable.v2.Bigtable/CheckAndMutateRow
         self.grpc_client_method = tag_key.TagKey("grpc_client_method")
 
         # server tags
+
         # gRPC server status code returned, e.g. OK, CANCELLED, DEADLINE_EXCEEDED
         self.grpc_server_status = tag_key.TagKey("grpc_server_status")
+
         # Full gRPC method name, including package, service and method, e.g. com.exampleapi.v4.BookshelfService/Checkout
         self.grpc_server_method = tag_key.TagKey("grpc_server_method")
 
