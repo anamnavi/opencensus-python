@@ -2,7 +2,9 @@ from opencensus.stats import aggregation
 from opencensus.stats.aggregation import CountAggregation
 from opencensus.stats.aggregation import SumAggregation
 from opencensus.stats.aggregation import DistributionAggregation
+from opencensus.stats import bucket_boundaries
 from opencensus.stats import view
+
 
 class RPCViewConstants:
     """
@@ -23,6 +25,10 @@ class RPCViewConstants:
                                    2048.0, 4096.0, 8192.0, 16384.0, 32768.0, 65536.0]
 
     # constants
-    mean = aggregation.mean.new_aggregation_data() #needs to be implemented
+    mean = aggregation.mean.new_aggregation_data() # todo needs to be implemented
     count = CountAggregation.new_aggregation_data()
     sum = SumAggregation.new_aggregation_data()
+
+    distrib = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries))
+    aggregation_with_bytes_histogram = distrib.new_aggregation_data()
+
