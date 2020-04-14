@@ -25,7 +25,7 @@ class RPCViewConstants:
                                    2048.0, 4096.0, 8192.0, 16384.0, 32768.0, 65536.0]
 
     # constants
-    mean = aggregation.mean.new_aggregation_data() # todo needs to be implemented
+    # mean = aggregation.mean.new_aggregation_data() # todo needs to be implemented
     count = CountAggregation.new_aggregation_data()
     sum = SumAggregation.new_aggregation_data()
 
@@ -38,13 +38,13 @@ class RPCViewConstants:
     distrib_count = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_count_bucket_boundaries))
     aggregation_with_count_histogram = distrib_count.new_aggregation_data()
 
-    # todo ceaate and use Duration class
-    minute =
-    hour =
-
-    # todo
-    cumulative =
-    interval_minute =
-    interval_hour =
+    # # todo ceaate and use Duration class
+    # minute =
+    # hour =
+    #
+    # # todo
+    # cumulative =
+    # interval_minute =
+    # interval_hour =
 
 
