@@ -29,6 +29,22 @@ class RPCViewConstants:
     count = CountAggregation.new_aggregation_data()
     sum = SumAggregation.new_aggregation_data()
 
-    distrib = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries))
-    aggregation_with_bytes_histogram = distrib.new_aggregation_data()
+    distrib_bytes = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries))
+    aggregation_with_bytes_histogram = distrib_bytes.new_aggregation_data()
+
+    distrib_millis = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_millis_bucket_boundaries))
+    aggregation_with_millis_histogram = distrib_millis.new_aggregation_data()
+
+    distrib_count = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_count_bucket_boundaries))
+    aggregation_with_count_histogram = distrib_count.new_aggregation_data()
+
+    # todo ceaate and use Duration class
+    minute =
+    hour =
+
+    # todo
+    cumulative =
+    interval_minute =
+    interval_hour =
+
 
