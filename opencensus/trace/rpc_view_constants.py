@@ -4,6 +4,7 @@ from opencensus.stats.aggregation import SumAggregation
 from opencensus.stats.aggregation import DistributionAggregation
 from opencensus.stats import bucket_boundaries
 from opencensus.stats import view
+import rpc_measure_constants
 
 
 class RPCViewConstants:
@@ -46,5 +47,82 @@ class RPCViewConstants:
     # cumulative =
     # interval_minute =
     # interval_hour =
+
+    """
+    rpc client views:
+    The following set of views are considered minimum required to monitor client-side performance:
+    """
+    grpc_client_sent_bytes_per_rpc_view = view.View(name="grpc.io/client/sent_bytes_per_rpc",
+                                                    description="Sent bytes per RPC",
+                                                    columns=[rpc_measure_constants.grpc_client_method],
+                                                    measure=rpc_measure_constants.GRPC_CLIENT_SENT_BYTES_PER_RPC,
+                                                    aggregation=aggregation_with_bytes_histogram)
+
+    grpc_client_received_bytes_per_rpc_view = view.View(name="grpc.io/client/received_bytes_per_rpc",
+                                                        description="Received bytes per RPC",
+                                                        columns=[rpc_measure_constants.grpc_client_method],
+                                                        measure=rpc_measure_constants.grpc_client_received_bytes_per_rpc,
+                                                        aggregation=aggregation_with_bytes_histogram)
+
+    grpc_client_roundtrip_latency_view = view.View(name="grpc.io/client/roundtrip_latency",
+                                                   description="Latency in msecs",
+                                                   columns=[rpc_measure_constants.grpc_client_method],
+                                                   measure=rpc_measure_constants.GRPC_CLIENT_ROUNDTRIP_LATENCY,
+                                                   aggregation=aggregation_with_millis_histogram)
+
+    grpc_client_completed_rpc_view = view.View(name="grpc.io/client/completed_rpcs",
+                                               description="Number of completed client RPCs",
+                                               columns=[rpc_measure_constants.grpc_client_method, rpc_measure_constants.grpc_client_status],
+                                               measure=rpc_measure_constants.grpc_client_roundtrip_latency,
+                                               aggregation=count)
+
+    grpc_client_started_rpc_view = view.View(name="grpc.io/client/started_rpcs",
+                                             description="Number of started client RPCs",
+                                             columns=[rpc_measure_constants.grpc_client_method],
+                                             measure=rpc_measure_constants.grpc_client_started_rpcs,
+                                             aggregation=count)
+
+    # Extra Views: The following set of views are considered useful but not mandatory to monitor client side performance
+    grpc_client_sent_messages_per_rpc_view = view.View(name="grpc.io/client/sent_messages_per_rpc",
+                                                       description="Number of messages sent in the RPC",
+                                                       columns=[rpc_measure_constants.grpc_client_method],
+                                                       measure=rpc_measure_constants.grpc_client_sent_messages_per_rpc,
+                                                       aggregation=aggregation_with_count_histogram)
+
+    grpc_client_received_messages_per_rpc_view = view.View(name="grpc.io/client/received_messages_per_rpc",
+                                                           description="Number of response messages received per RPC",
+                                                           columns=[rpc_measure_constants.grpc_client_method],
+                                                           measure=rpc_measure_constants.grpc_client_received_messages_per_rpc,
+                                                           aggregation=aggregation_with_count_histogram)
+
+    grpc_client_server_latency_view = view.View(name="grpc.io/client/server_latency",
+                                                description="Server latency in msecs",
+                                                columns=[rpc_measure_constants.grpc_client_method],
+                                                measure=rpc_measure_constants.grpc_client_server_latency,
+                                                aggregation=aggregation_with_millis_histogram)
+
+    grpc_client_sent_messages_per_method_view = view.View(name="grpc.io/client/sent_messages_per_method",
+                                                          description="Number of messages sent",
+                                                          columns=[rpc_measure_constants.grpc_client_method],
+                                                          measure=rpc_measure_constants.grpc_client_sent_messages_per_method,
+                                                          aggregation=count)
+
+    grpc_client_received_messages_per_method_view = view.View(name="grpc.io/client/received_messages_per_method",
+                                                              description="Number of messages received",
+                                                              columns=[rpc_measure_constants.grpc_client_method],
+                                                              measure=rpc_measure_constants.grpc_client_received_messages_per_method,
+                                                              aggregation=count)
+    grpc_client_sent_bytes_per_method_view = view.View(name="grpc.io/client/sent_bytes_per_method",
+                                                       description="Sent bytes per method",
+                                                       columns=[rpc_measure_constants.grpc_client_method],
+                                                       measure=rpc_measure_constants.grpc_client_sent_bytes_per_method,
+                                                       aggregation=sum)
+
+    grpc_client_received_bytes_per_method_view = view.View(name="grpc.io/client/received_bytes_per_method",
+                                                           description="Received bytes per method",
+                                                           columns=[rpc_measure_constants.grpc_client_method],
+                                                           measure=rpc_measure_constants.grpc_client_received_bytes_per_method,
+                                                           aggregation=sum)
+
 
 
