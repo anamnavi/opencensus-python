@@ -36,14 +36,14 @@ class RPCViewConstants:
     count = CountAggregation()
     sum = SumAggregation()
 
-    distrib_bytes = DistributionAggregation([bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries)])
-    aggregation_with_bytes_histogram = distrib_bytes.new_aggregation_data()
+    bytes_bucket_boundaries = bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries)
+    aggregation_with_bytes_histogram = DistributionAggregation(bytes_bucket_boundaries.boundaries)
 
-    distrib_millis = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_millis_bucket_boundaries))
-    aggregation_with_millis_histogram = distrib_millis.new_aggregation_data()
+    millis_bucket_boundaries = bucket_boundaries.BucketBoundaries(rpc_millis_bucket_boundaries)
+    aggregation_with_millis_histogram = DistributionAggregation(millis_bucket_boundaries.boundaries)
 
-    distrib_count = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_count_bucket_boundaries))
-    aggregation_with_count_histogram = distrib_count.new_aggregation_data()
+    count_bucket_boundaries = bucket_boundaries.BucketBoundaries(rpc_count_bucket_boundaries)
+    aggregation_with_count_histogram = DistributionAggregation(count_bucket_boundaries.boundaries)
 
     # # todo ceaate and use Duration class
     # minute =
@@ -61,7 +61,7 @@ class RPCViewConstants:
     grpc_client_sent_bytes_per_rpc_view = view.View(name="grpc.io/client/sent_bytes_per_rpc",
                                                     description="Sent bytes per RPC",
                                                     columns=[rpc_measure_constants.grpc_client_method],
-                                                    measure=rpc_measure_constants.GRPC_CLIENT_SENT_BYTES_PER_RPC,
+                                                    measure=rpc_measure_constants.grpc_client_sent_bytes_per_rpc,
                                                     aggregation=aggregation_with_bytes_histogram)
 
     grpc_client_received_bytes_per_rpc_view = view.View(name="grpc.io/client/received_bytes_per_rpc",
@@ -73,7 +73,7 @@ class RPCViewConstants:
     grpc_client_roundtrip_latency_view = view.View(name="grpc.io/client/roundtrip_latency",
                                                    description="Latency in msecs",
                                                    columns=[rpc_measure_constants.grpc_client_method],
-                                                   measure=rpc_measure_constants.GRPC_CLIENT_ROUNDTRIP_LATENCY,
+                                                   measure=rpc_measure_constants.grpc_client_roundtrip_latency,
                                                    aggregation=aggregation_with_millis_histogram)
 
     grpc_client_completed_rpc_view = view.View(name="grpc.io/client/completed_rpcs",

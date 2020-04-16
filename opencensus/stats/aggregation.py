@@ -86,6 +86,7 @@ class DistributionAggregation(object):
 
     def __init__(self, boundaries=None):
         if boundaries:
+            print(boundaries)
             if not all(boundaries[ii] < boundaries[ii + 1]
                        for ii in range(len(boundaries) - 1)):
                 raise ValueError("bounds must be sorted in increasing order")
