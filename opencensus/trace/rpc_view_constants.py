@@ -27,10 +27,16 @@ class RPCViewConstants:
 
     # constants
     # mean = aggregation.mean.new_aggregation_data() # todo needs to be implemented
-    count = CountAggregation.new_aggregation_data()
-    sum = SumAggregation.new_aggregation_data()
+    # count_obj = CountAggregation()
+    # count = count_obj.new_aggregation_data()
+    #
+    # sum_obj = SumAggregation()
+    # sum = sum_obj.new_aggregation_data()
 
-    distrib_bytes = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries))
+    count = CountAggregation()
+    sum = SumAggregation()
+
+    distrib_bytes = DistributionAggregation([bucket_boundaries.BucketBoundaries(rpc_bytes_bucket_boundaries)])
     aggregation_with_bytes_histogram = distrib_bytes.new_aggregation_data()
 
     distrib_millis = DistributionAggregation(bucket_boundaries.BucketBoundaries(rpc_millis_bucket_boundaries))
