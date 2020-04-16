@@ -10,7 +10,7 @@ class RPCVCTests(unittest.TestCase):
         self.rpc_view = rpc_view_constants.RPCViewConstants()
 
     def test_client_measures(self):
-        self.assertEquals(rpc_view_constants.grpc_client_sent_bytes_per_rpc_view.get_metric_descriptor().name, "grpc.io/client/sent_bytes_per_rpc", "view not set right")
+        self.assertEquals(self.rpc_view.grpc_client_sent_bytes_per_rpc_view.get_metric_descriptor().name, "grpc.io/client/sent_bytes_per_rpc", "view not set right")
 
 
 if __name__ == '__main__':

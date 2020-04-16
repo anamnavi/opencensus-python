@@ -2,7 +2,7 @@ from opencensus.tags import tag_key
 import measure
 
 
-class RPCMeasureConstants():
+class RPCMeasureConstants:
     """
     constants for collecting RPC stats
     see specs in documentation for opencensus-python
