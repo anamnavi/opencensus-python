@@ -47,4 +47,3 @@ class Measure:
     @property
     def unit(self):
         return self._unit
-

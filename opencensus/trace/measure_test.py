@@ -13,6 +13,8 @@ class MeasureTest(unittest.TestCase):
         self.measure = measure.Measure("grpc_client_sent_messages_per_rpc",
                                        "Number of messages sent in the RPC",
                                        "1")
+        self.measure_exceeds_max_length = None
+        self.measure_non_printable = None
 
     def test_measure_name(self):
         """
