@@ -1,6 +1,6 @@
 import unittest
 import rpc_view_constants
-from opencensus.metrics.export.metric_descriptor import MetricDescriptorType
+
 
 class RPCVCTests(unittest.TestCase):
     """
@@ -12,8 +12,8 @@ class RPCVCTests(unittest.TestCase):
 
     def test_client_measures(self):
         self.assertEqual(self.rpc_view.grpc_client_sent_bytes_per_rpc_view.name,
-                          "grpc.io/client/sent_bytes_per_rpc",
-                          "grpc_client_sent_bytes_per_rpc_view not set correctly")
+                         "grpc.io/client/sent_bytes_per_rpc",
+                         "grpc_client_sent_bytes_per_rpc_view not set correctly")
         self.assertEqual(self.rpc_view.grpc_client_received_bytes_per_rpc_view.description,
                          "Received bytes per RPC",
                          "grpc_client_received_bytes_per_rpc_view not set correctly")
@@ -65,11 +65,11 @@ class RPCVCTests(unittest.TestCase):
         self.assertEqual(self.rpc_view.grpc_server_completed_rpcs.name,
                          "grpc.io/server/completed_rpcs",
                          "grpc_server_completed_rpcs view not set correctly")
-        
+
         self.assertEqual(self.rpc_view.grpc_server_started_rpcs.name,
                          "grpc.io/server/started_rpcs",
                          "grpc_server_started_rpcs view not set correctly")
-        
+
         # Test extra server views
         self.assertEqual(self.rpc_view.grpc_server_received_messages_per_rpc.name,
                          "grpc.io/server/received_messages_per_rpc",
