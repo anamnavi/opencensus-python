@@ -17,10 +17,10 @@ class RPCVCTests(unittest.TestCase):
         self.assertEqual(self.rpc_view.grpc_client_received_bytes_per_rpc_view.description,
                          "Received bytes per RPC",
                          "grpc_client_received_bytes_per_rpc_view not set correctly")
-        self.assertEqual(self.rpc_view.grpc_client_roundtrip_latency_view.measure.get_name(),
+        self.assertEqual(self.rpc_view.grpc_client_roundtrip_latency_view.measure.name,
                          "grpc.io/client/roundtrip_latency",
                          "grpc_client_roundtrip_latency_view not set correctly")
-        self.assertEqual(self.rpc_view.grpc_client_completed_rpc_view.measure.get_name(),
+        self.assertEqual(self.rpc_view.grpc_client_completed_rpc_view.measure.name,
                          "grpc.io/client/roundtrip_latency",
                          "grpc_client_completed_rpc_view not set correctly")
         self.assertEqual(self.rpc_view.grpc_client_started_rpc_view.description,
@@ -32,7 +32,7 @@ class RPCVCTests(unittest.TestCase):
         self.assertEqual(self.rpc_view.grpc_client_received_messages_per_rpc_view.description,
                          "Number of response messages received per RPC",
                          "grpc_client_received_messages_per_rpc_view not set correctly")
-        self.assertEqual(self.rpc_view.grpc_client_server_latency_view.measure.get_unit(),
+        self.assertEqual(self.rpc_view.grpc_client_server_latency_view.measure.unit,
                          "ms",
                          "grpc_client_server_latency_view not set correctly")
         self.assertEqual(self.rpc_view.grpc_client_sent_messages_per_method_view.name,
@@ -41,7 +41,7 @@ class RPCVCTests(unittest.TestCase):
         self.assertEqual(self.rpc_view.grpc_client_received_messages_per_method_view.description,
                          "Number of messages received",
                          "grpc_client_received_messages_per_method_view not set correctly")
-        self.assertEqual(self.rpc_view.grpc_client_sent_bytes_per_method_view.measure.get_unit(),
+        self.assertEqual(self.rpc_view.grpc_client_sent_bytes_per_method_view.measure.unit,
                          "by",
                          "grpc_client_sent_bytes_per_method_view not set correctly")
         self.assertEqual(self.rpc_view.grpc_client_received_bytes_per_method_view.name,
@@ -54,7 +54,6 @@ class RPCVCTests(unittest.TestCase):
                          "grpc.io/server/received_bytes_per_rpc",
                          "grpc_server_received_bytes_per_rpc view not set correctly")
 
-<<<<<<< HEAD
         self.assertEqual(self.rpc_view.grpc_server_sent_bytes_per_rpc.name,
                          "grpc.io/server/sent_bytes_per_rpc",
                          "grpc_server_sent_bytes_per_rpc view not set correctly")
@@ -96,7 +95,6 @@ class RPCVCTests(unittest.TestCase):
                          "grpc.io/server/received_bytes_per_method",
                          "grpc_server_received_bytes_per_method view not set correctly")
 
-=======
->>>>>>> 75179e5b9254b5296c4771146b5d3d00d861a813
+
 if __name__ == '__main__':
     unittest.main()
