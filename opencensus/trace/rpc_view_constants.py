@@ -125,5 +125,74 @@ class RPCViewConstants:
                                                            measure=rpc_m_c.grpc_client_received_bytes_per_method,
                                                            aggregation=sum)
 
+    """
+    rpc server views:
+    The following set of views are considered minimum required to monitor server-side performance:
+    """
+    grpc_server_received_bytes_per_rpc = view.View(name="grpc.io/server/received_bytes_per_rpc",
+                                                   description="Received bytes per RPC",
+                                                   columns=[rpc_m_c.grpc_server_method],
+                                                   measure=rpc_m_c.grpc_server_received_bytes_per_rpc,
+                                                   aggregation=sum)
+
+    grpc_server_sent_bytes_per_rpc = view.View(name="grpc.io/server/sent_bytes_per_rpc",
+                                               description="Sent bytes per RPC",
+                                               columns=[rpc_m_c.grpc_server_method],
+                                               measure=rpc_m_c.grpc_server_sent_bytes_per_method,
+                                               aggregation=sum)
+
+    grpc_server_server_latency = view.View(name="grpc.io/server/server_latency",
+                                           description="Latency in msecs",
+                                           columns=[rpc_m_c.grpc_server_method],
+                                           measure=rpc_m_c.grpc_server_server_latency,
+                                           aggregation=aggregation_with_bytes_histogram) # Aggregation type listed is actually mean
+
+    grpc_server_completed_rpcs = view.View(name="grpc.io/server/completed_rpcs",
+                                           description="Number of completed server RPCs",
+                                           columns=[rpc_m_c.grpc_server_method, rpc_m_c.grpc_server_status],
+                                           measure=rpc_m_c.grpc_server_server_latency,
+                                           aggregation=count)
+
+    grpc_server_started_rpcs = view.View(name="grpc.io/server/started_rpcs",
+                                         description="Number of started server RPCs",
+                                         columns=[rpc_m_c.grpc_server_method],
+                                         measure=rpc_m_c.grpc_server_started_rpcs,
+                                         aggregation=count)
 
 
+    # Extra Views: The following set of views are considered useful but not mandatory to monitor server-side performance 
+    grpc_server_received_messages_per_rpc = view.View(name="grpc.io/server/received_messages_per_rpc",
+                                                      description="Number of response messages received in each RPC",
+                                                      columns=[rpc_m_c.grpc_server_method],
+                                                      measure=rpc_m_c.grpc_server_received_messages_per_rpc,
+                                                      aggregation=aggregation_with_count_histogram)
+
+    grpc_server_sent_messages_per_rpc = view.View(name="grpc.io/server/sent_messages_per_rpc",
+                                                  description="Number of messages sent in each RPC",
+                                                  columns=[rpc_m_c.grpc_server_method],
+                                                  measure=rpc_m_c.grpc_server_sent_messages_per_rpc,
+                                                  aggregation=aggregation_with_count_histogram)
+
+    grpc_server_sent_messages_per_method = view.View(name="grpc.io/server/sent_messages_per_method",
+                                                     description="Number of messages sent",
+                                                     columns=[rpc_m_c.grpc_server_method],
+                                                     measure=rpc_m_c.grpc_server_sent_messages_per_method,
+                                                     aggregation=count)
+
+    grpc_server_received_messages_per_method = view.View(name="grpc.io/server/received_messages_per_method",
+                                                         description="Number of messages received",
+                                                         columns=[rpc_m_c.grpc_server_method],
+                                                         measure=rpc_m_c.grpc_server_received_messages_per_method,
+                                                         aggregation=count)
+
+    grpc_server_sent_bytes_per_method = view.View(name="grpc.io/server/sent_bytes_per_method",
+                                                  description="Sent bytes per method",
+                                                  columns=[rpc_m_c.grpc_server_method],
+                                                  measure=rpc_m_c.grpc_server_sent_bytes_per_method,
+                                                  aggregation=sum)
+
+    grpc_server_received_bytes_per_method = view.View(name="grpc.io/server/received_bytes_per_method",
+                                                      description="Received bytes per method",
+                                                      columns=[rpc_m_c.grpc_server_method],
+                                                      measure=rpc_m_c.grpc_server_received_bytes_per_method,
+                                                      aggregation=sum)
