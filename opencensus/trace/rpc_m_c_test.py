@@ -67,7 +67,8 @@ class RPCMCTest(unittest.TestCase):
                          "grpc.io/server/sent_bytes_per_rpc",
                          "grpc_server_sent_bytes_per_rpc not set properly")
         self.assertEqual(self.rpc_measure.grpc_server_server_latency.description,
-                         "Time between first byte of request received to last byte of response sent or terminal error.",
+                         "Time between first byte of request received to"
+                         " last byte of response sent or terminal error.",
                          "grpc_server_server_latency not set properly")
         self.assertEqual(self.rpc_measure.grpc_server_started_rpcs.unit,
                          "1",
