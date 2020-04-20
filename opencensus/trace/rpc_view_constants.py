@@ -25,13 +25,6 @@ class RPCViewConstants:
     rpc_count_bucket_boundaries = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0, 128.0, 256.0, 512.0, 1024.0,
                                    2048.0, 4096.0, 8192.0, 16384.0, 32768.0, 65536.0]
 
-    # constants
-    # mean = aggregation.mean.new_aggregation_data() # todo needs to be implemented
-    # count_obj = CountAggregation()
-    # count = count_obj.new_aggregation_data()
-    #
-    # sum_obj = SumAggregation()
-    # sum = sum_obj.new_aggregation_data()
 
     count = CountAggregation()
     sum = SumAggregation()

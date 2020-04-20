@@ -54,6 +54,7 @@ class RPCVCTests(unittest.TestCase):
                          "grpc.io/server/received_bytes_per_rpc",
                          "grpc_server_received_bytes_per_rpc view not set correctly")
 
+<<<<<<< HEAD
         self.assertEqual(self.rpc_view.grpc_server_sent_bytes_per_rpc.name,
                          "grpc.io/server/sent_bytes_per_rpc",
                          "grpc_server_sent_bytes_per_rpc view not set correctly")
@@ -95,5 +96,7 @@ class RPCVCTests(unittest.TestCase):
                          "grpc.io/server/received_bytes_per_method",
                          "grpc_server_received_bytes_per_method view not set correctly")
 
+=======
+>>>>>>> 75179e5b9254b5296c4771146b5d3d00d861a813
 if __name__ == '__main__':
     unittest.main()
