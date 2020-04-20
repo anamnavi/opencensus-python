@@ -2,8 +2,8 @@
 import string
 
 NAME_MAX_LENGTH = 255
-ERROR_MSG_INVALID_NAME = f"Name should be a ASCII string with a length " \
-                         f"no greater than {NAME_MAX_LENGTH} characters."
+ERROR_MSG_INVALID_NAME = "Name should be a ASCII string with a length " \
+                         "no greater than {NAME_MAX_LENGTH} characters."
 
 
 class Measure:

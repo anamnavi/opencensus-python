@@ -152,7 +152,7 @@ class RPCViewConstants:
                                            description="Latency in msecs",
                                            columns=[rpc_m_c.grpc_server_method],
                                            measure=rpc_m_c.grpc_server_server_latency,
-                                           aggregation=aggregation_with_bytes_histogram) # Aggregation type listed is actually mean
+                                           aggregation=aggregation_with_millis_histogram)
 
     grpc_server_completed_rpcs = view.View(name="grpc.io/server/completed_rpcs",
                                            description="Number of completed server RPCs",
