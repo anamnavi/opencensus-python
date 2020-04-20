@@ -47,27 +47,4 @@ class Measure:
     @property
     def unit(self):
         return self._unit
-    #
-    # def get_name(self):
-    #     """
-    #     returns the name of the measurement
-    #     """
-    #     return self.name
-    #
-    # def get_description(self):
-    #     """
-    #     returns the description of the measurement
-    #     """
-    #     return self.description
-    #
-    # def get_unit(self):
-    #     """
-    #     returns the unit of the measurement
-    #     """
-    #     return self.unit
-    #
-    # def match(self):
-    #     """
-    #     was applying a function (pointer) based on whether it was measure_long, measure_double
-    #     todo: decide if needs to be implemented
-    #     """
+
