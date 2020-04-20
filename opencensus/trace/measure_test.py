@@ -18,7 +18,7 @@ class MeasureTest(unittest.TestCase):
         """
         tests measure module's get_name() method
         """
-        self.assertEqual(self.measure.get_name(),
+        self.assertEqual(self.measure.name,
                          "grpc_client_sent_messages_per_rpc",
                          "get_name() method not working")
 
@@ -26,7 +26,7 @@ class MeasureTest(unittest.TestCase):
         """
         tests measure module's get_description() method
         """
-        self.assertEqual(self.measure.get_description(),
+        self.assertEqual(self.measure.description,
                          "Number of messages sent in the RPC",
                          "get_description() method not working")
 
@@ -34,7 +34,7 @@ class MeasureTest(unittest.TestCase):
         """
         tests measure module's get_unit() method
         """
-        self.assertEqual(self.measure.get_unit(),
+        self.assertEqual(self.measure.unit,
                          "1",
                          "get_unit() not working correctly")
 

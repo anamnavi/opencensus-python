@@ -26,30 +26,48 @@ class Measure:
     def __init__(self, name, description, unit):
         if len(name) > NAME_MAX_LENGTH or not all(ch in string.printable for ch in name):
             raise ValueError(ERROR_MSG_INVALID_NAME)
-        self.name = name
-        self.description = description
-        self.unit = unit
+        self._name = name
+        self._description = description
+        self._unit = unit
 
-    def get_name(self):
+    @property
+    def name(self):
         """
-        returns the name of the measurement
+        the name of the measure
         """
-        return self.name
+        return self._name
 
-    def get_description(self):
+    @property
+    def description(self):
         """
-        returns the description of the measurement
+        the description of the measure
         """
-        return self.description
+        return self._description
 
-    def get_unit(self):
-        """
-        returns the unit of the measurement
-        """
-        return self.unit
-
-    def match(self):
-        """
-        was applying a function (pointer) based on whether it was measure_long, measure_double
-        todo: decide if needs to be implemented
-        """
+    @property
+    def unit(self):
+        return self._unit
+    #
+    # def get_name(self):
+    #     """
+    #     returns the name of the measurement
+    #     """
+    #     return self.name
+    #
+    # def get_description(self):
+    #     """
+    #     returns the description of the measurement
+    #     """
+    #     return self.description
+    #
+    # def get_unit(self):
+    #     """
+    #     returns the unit of the measurement
+    #     """
+    #     return self.unit
+    #
+    # def match(self):
+    #     """
+    #     was applying a function (pointer) based on whether it was measure_long, measure_double
+    #     todo: decide if needs to be implemented
+    #     """
