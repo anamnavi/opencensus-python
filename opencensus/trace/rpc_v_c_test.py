@@ -49,7 +49,5 @@ class RPCVCTests(unittest.TestCase):
                          "grpc_client_received_bytes_per_method_view not set correctly")
 
 
-
-
 if __name__ == '__main__':
     unittest.main()
