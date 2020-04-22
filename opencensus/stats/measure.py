@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import string
+
+NAME_MAX_LENGTH = 255
+ERROR_MSG_INVALID_NAME = "Name should be a ASCII string with a length " \
+                         "no greater than " + str(NAME_MAX_LENGTH) + " characters."
+
 
 class BaseMeasure(object):
     """ A measure is the type of metric that is being recorded with
@@ -28,6 +34,8 @@ class BaseMeasure(object):
 
     """
     def __init__(self, name, description, unit=None):
+        if len(name) > NAME_MAX_LENGTH or not all(ch in string.printable for ch in name):
+            raise ValueError(ERROR_MSG_INVALID_NAME)
         self._name = name
         self._description = description
         self._unit = unit

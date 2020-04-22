@@ -1,5 +1,9 @@
 import unittest
-import measure
+from opencensus.stats.measure import BaseMeasure
+from opencensus.stats.measure import MeasureInt
+from opencensus.stats.measure import MeasureFloat
+# import measure
+
 
 class MeasureTest(unittest.TestCase):
     """
@@ -10,9 +14,9 @@ class MeasureTest(unittest.TestCase):
         """
         setup performed before each test
         """
-        self.measure = measure.Measure("grpc_client_sent_messages_per_rpc",
-                                       "Number of messages sent in the RPC",
-                                       "1")
+        self.measure = MeasureInt("grpc.io/client/sent_messages_per_rpc",
+                                  "Number of messages sent in the RPC",
+                                  "1")  # grpc_client_sent_messages_per_rpc
         self.measure_exceeds_max_length = None
         self.measure_non_printable = None
 
@@ -21,7 +25,7 @@ class MeasureTest(unittest.TestCase):
         tests measure module's get_name() method
         """
         self.assertEqual(self.measure.name,
-                         "grpc_client_sent_messages_per_rpc",
+                         "grpc.io/client/sent_messages_per_rpc",
                          "get_name() method not working")
 
     def test_measure_description(self):
@@ -46,7 +50,7 @@ class MeasureTest(unittest.TestCase):
         and assert that it raises ValueError as expected
         """
         with self.assertRaises(ValueError):
-            self.measure_exceeds_max_length = measure.Measure("a"*256, "some description", "1")
+            self.measure_exceeds_max_length = MeasureFloat("a"*256, "some description", "1")
 
     def test_unprintable_name_init(self):
         """
@@ -56,7 +60,7 @@ class MeasureTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             chr_list = ['0x41', '0x1B', '0x42']
             non_printable_str = "".join([chr(int(x, 16)) for x in chr_list])  # 'AB\x1b'
-            self.measure_non_printable = measure.Measure(non_printable_str, "some description", "1")
+            self.measure_non_printable = MeasureInt(non_printable_str, "some description", "1")
 
 
 if __name__ == '__main__':
