@@ -25,7 +25,7 @@ from pprint import pprint
 from opencensus.trace.samplers import AlwaysOnSampler
 from opencensus.trace.tracer import Tracer
 from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view as view_module
 from opencensus.tags import tag_key as tag_key_module

@@ -20,7 +20,7 @@ except ImportError:
 import unittest
 
 from opencensus.metrics.export import metric_descriptor, value
-from opencensus.stats import aggregation, measure
+from opencensus.stats import aggregation, measure_oc
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view
 from opencensus.tags import tag_map
@@ -36,7 +36,7 @@ class TestStats(unittest.TestCase):
         initial_metrics = list(stats.get_metrics())
         self.assertEqual(initial_metrics, [])
 
-        mock_measure = Mock(spec=measure.MeasureFloat)
+        mock_measure = Mock(spec=measure_oc.MeasureFloat)
 
         mock_md = Mock(spec=metric_descriptor.MetricDescriptor)
         mock_md.type =\

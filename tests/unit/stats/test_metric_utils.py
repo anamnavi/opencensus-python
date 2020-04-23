@@ -21,7 +21,7 @@ from opencensus.metrics.export import metric_descriptor, point, value
 from opencensus.stats import (
     aggregation,
     aggregation_data,
-    measure,
+    measure_oc,
     metric_utils,
     view,
     view_data,
@@ -42,7 +42,7 @@ class TestMetricUtils(unittest.TestCase):
         start_time = datetime.datetime(2019, 1, 25, 11, 12, 13)
         current_time = datetime.datetime(2019, 1, 25, 12, 13, 14)
 
-        mock_measure = mock.Mock(spec=measure.MeasureFloat)
+        mock_measure = mock.Mock(spec=measure_oc.MeasureFloat)
         mock_aggregation = mock.Mock(spec=aggregation_class)
         mock_aggregation.get_metric_type.return_value = metric_descriptor_type
 
@@ -110,7 +110,7 @@ class TestMetricUtils(unittest.TestCase):
             self.do_test_view_data_to_metric(*args)
 
     def test_convert_view_without_labels(self):
-        mock_measure = mock.Mock(spec=measure.MeasureFloat)
+        mock_measure = mock.Mock(spec=measure_oc.MeasureFloat)
         mock_aggregation = mock.Mock(spec=aggregation.DistributionAggregation)
         mock_aggregation.get_metric_type.return_value = \
             metric_descriptor.MetricDescriptorType.CUMULATIVE_DISTRIBUTION

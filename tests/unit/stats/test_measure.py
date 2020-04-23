@@ -14,7 +14,7 @@
 
 import unittest
 
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 
 
 class TestBaseMeasure(unittest.TestCase):

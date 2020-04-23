@@ -20,7 +20,7 @@ from prometheus_client.core import Sample
 
 from opencensus.ext.prometheus import stats_exporter as prometheus
 from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view as view_module
 from opencensus.stats import view_data as view_data_module

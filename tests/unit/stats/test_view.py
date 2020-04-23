@@ -17,7 +17,7 @@ import unittest
 import mock
 
 from opencensus.metrics.export import metric_descriptor
-from opencensus.stats import aggregation, measure
+from opencensus.stats import aggregation, measure_oc
 from opencensus.stats import view as view_module
 
 
@@ -43,7 +43,7 @@ class TestView(unittest.TestCase):
         self.assertEqual(aggregation, view.aggregation)
 
     def test_view_to_metric_descriptor(self):
-        mock_measure = mock.Mock(spec=measure.MeasureFloat)
+        mock_measure = mock.Mock(spec=measure_oc.MeasureFloat)
         mock_agg = mock.Mock(spec=aggregation.SumAggregation)
         mock_agg.get_metric_type.return_value = \
             metric_descriptor.MetricDescriptorType.CUMULATIVE_DOUBLE

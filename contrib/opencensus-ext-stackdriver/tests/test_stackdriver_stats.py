@@ -34,7 +34,7 @@ from opencensus.metrics.export import (
 from opencensus.stats import aggregation as aggregation_module
 from opencensus.stats import aggregation_data as aggregation_data_module
 from opencensus.stats import execution_context
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 from opencensus.stats import metric_utils
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view as view_module

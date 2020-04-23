@@ -13,7 +13,6 @@
 # limitations under the License.
 
 
-import measure
 import rpc_measure_constants
 import rpc_view_constants
 
