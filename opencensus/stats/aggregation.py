@@ -16,7 +16,7 @@ import logging
 
 from opencensus.metrics.export.metric_descriptor import MetricDescriptorType
 from opencensus.stats import aggregation_data
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +86,7 @@ class DistributionAggregation(object):
 
     def __init__(self, boundaries=None):
         if boundaries:
+            print(boundaries)
             if not all(boundaries[ii] < boundaries[ii + 1]
                        for ii in range(len(boundaries) - 1)):
                 raise ValueError("bounds must be sorted in increasing order")

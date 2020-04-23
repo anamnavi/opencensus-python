@@ -2,7 +2,7 @@ import string
 
 NAME_MAX_LENGTH = 255
 ERROR_MSG_INVALID_NAME = "Name should be a ASCII string with a length " \
-                         "no greater than " + str(NAME_MAX_LENGTH) + "characters."
+                         "no greater than " + str(NAME_MAX_LENGTH) + " characters."
 
 
 class BaseMeasure(object):
@@ -19,7 +19,7 @@ class BaseMeasure(object):
     :param unit: the units in which the measure values are measured
 
     """
-    def __init__(self, name, description, unit):
+    def __init__(self, name, description, unit=None):
         if len(name) > NAME_MAX_LENGTH or not all(ch in string.printable for ch in name):
             raise ValueError(ERROR_MSG_INVALID_NAME)
         self._name = name
@@ -33,7 +33,7 @@ class BaseMeasure(object):
 
     @property
     def description(self):
-        """The unit of the current measure"""
+        """The description of the current measure"""
         return self._description
 
     @property
@@ -52,5 +52,5 @@ class MeasureInt(BaseMeasure):
 class MeasureFloat(BaseMeasure):
     """Creates a Float Measure"""
 
-    def __init__(self, name, description, unit):
+    def __init__(self, name, description, unit=None):
         super(MeasureFloat, self).__init__(name, description, unit)

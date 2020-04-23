@@ -43,7 +43,7 @@ from opencensus.proto.agent.metrics.v1 import (
 from opencensus.proto.metrics.v1 import metrics_pb2
 from opencensus.proto.resource.v1 import resource_pb2
 from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 from opencensus.stats import metric_utils
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view as view_module

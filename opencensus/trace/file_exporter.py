@@ -41,7 +41,7 @@ class FileExporter(base_exporter.Exporter):
     """
 
     def __init__(self, file_name=DEFAULT_FILENAME,
-                 transport=sync.SyncTransport,
+                 transport=sync.AsyncTransport,
                  file_mode='w+'):
         self.file_name = file_name
         self.transport = transport(self)

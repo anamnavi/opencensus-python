@@ -18,7 +18,7 @@ import mock
 
 from opencensus.stats import measure_to_view_map as measure_to_view_map_module
 from opencensus.stats.aggregation import CountAggregation
-from opencensus.stats.measure import BaseMeasure, MeasureInt
+from opencensus.stats.measure_oc import BaseMeasure, MeasureInt
 from opencensus.stats.view import View
 from opencensus.stats.view_data import ViewData
 from opencensus.tags import tag_key as tag_key_module

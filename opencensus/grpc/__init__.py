@@ -13,11 +13,6 @@
 # limitations under the License.
 
 
-from opencensus.trace.span import Span  # original
-import measure
 import rpc_measure_constants
 import rpc_view_constants
-
-__all__ = ['Span']  # modified this to add Measure
-
 

@@ -18,7 +18,7 @@ import mock
 
 from opencensus.metrics.export import value
 from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
+from opencensus.stats import measure_oc as measure_module
 
 
 class TestSumAggregation(unittest.TestCase):
